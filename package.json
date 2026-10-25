@@ -1,0 +1,30 @@
+{
+  "name": "prime-fresh-oil-mills",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prime Fresh Oil Mills — B2B bulk supplier of edible seeds, oils and de-oiled cakes (eCell Qualification Challenge)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "15.4.11",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "framer-motion": "11.11.0",
+    "lucide-react": "0.47.0"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "@types/node": "22.10.0",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "tailwindcss": "3.4.17",
+    "postcss": "8.4.49",
+    "autoprefixer": "10.4.20",
+    "eslint": "8.57.0",
+    "eslint-config-next": "15.4.11"
+  }
+}
