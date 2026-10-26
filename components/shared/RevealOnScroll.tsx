@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, type Easing } from "framer-motion";
 
 interface RevealOnScrollProps {
   children: React.ReactNode;
@@ -55,7 +55,11 @@ export function RevealOnScroll({
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut", delay },
+      transition: {
+        duration: 0.5,
+        ease: "easeOut" as Easing,
+        delay,
+      },
     },
   };
 
