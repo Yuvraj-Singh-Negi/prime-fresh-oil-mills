@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useCallback, FormEvent } from "react";
+import { useState, FormEvent, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Plus, Minus, AlertCircle, Loader2 } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 import { useQuoteCart, useQuoteSubmission } from "@/components/quote/QuoteCartProvider";
 import { products } from "@/lib/products";
 import { validateQuantity, validateProductSelection, isValidQuantity } from "@/lib/validation";
@@ -16,8 +16,8 @@ export function BulkQuoteForm() {
   const { submitCart } = useQuoteSubmission();
   const reducedMotion = useReducedMotion() ?? false;
 
-  const [productId, setProductId] = useState("");
-  const [quantity, setQuantity] = useState("1");
+  const [productId, setProductId] = useState("yellow-mustard-seeds");
+  const [quantity, setQuantity] = useState("");
   const [quantityErrors, setQuantityErrors] = useState<string[]>([]);
   const [productErrors, setProductErrors] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,7 +45,6 @@ export function BulkQuoteForm() {
         setProductErrors([]);
       } else if (name === "quantity") {
         setQuantity(value);
-        // Clear errors as user types; final validation occurs on submit.
         if (isValidQuantity(Number(value)) || value === "") {
           setQuantityErrors([]);
         }
@@ -71,27 +70,24 @@ export function BulkQuoteForm() {
       const product = products.find((p) => p.id === productId);
       setIsSubmitting(true);
 
-      // Brief processing delay so the user sees a real transactional moment.
       const timer = setTimeout(() => {
         addItem(productId, parsed);
         setIsSubmitting(false);
         setConfirmation({ productName: product?.name ?? productId, quantity: parsed });
-        // Reset form for a fresh entry while preserving the added cart item.
-        setQuantity("1");
+        setQuantity("");
         setQuantityErrors([]);
         setProductErrors([]);
       }, reducedMotion ? 0 : 600);
 
       return () => clearTimeout(timer);
     },
-    [productId, quantity, isSubmitting, addItem, reducedMotion, validateForm]
+    [productId, quantity, isSubmitting, addItem, reducedMotion]
   );
 
   const dismissConfirmation = useCallback(() => setConfirmation(null), []);
 
   return (
     <section className="relative overflow-hidden">
-      {/* Decorative background panel */}
       <div className="absolute inset-0 bg-[#F5F0E6]/60 -z-10" aria-hidden="true" />
       <div className="max-w-5xl mx-auto px-6 py-12 md:py-16 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-12">
@@ -107,7 +103,7 @@ export function BulkQuoteForm() {
             <form onSubmit={handleSubmit} className="space-y-5" noValidate>
               <div className="space-y-2">
                 <label htmlFor="bulk-product" className="block text-sm font-medium text-foreground">
-                  Product
+                  Select Product
                 </label>
                 <select
                   id="bulk-product"
@@ -128,7 +124,6 @@ export function BulkQuoteForm() {
                 </select>
                 {productErrors.length > 0 && (
                   <p className="text-sm text-destructive flex items-center gap-1.5">
-                    <AlertCircle className="h-4 w-4" aria-hidden="true" />
                     {productErrors[0]}
                   </p>
                 )}
@@ -136,7 +131,7 @@ export function BulkQuoteForm() {
 
               <div className="space-y-2">
                 <label htmlFor="bulk-quantity" className="block text-sm font-medium text-foreground">
-                  Quantity (Metric Tons)
+                  Enter Quantity (Metric Tons / KG)
                 </label>
                 <div className="relative">
                   <input
@@ -149,7 +144,7 @@ export function BulkQuoteForm() {
                     step="0.001"
                     min="0.001"
                     max="100000"
-                    placeholder="e.g. 25.5"
+                    placeholder="Enter Quantity"
                     className="block w-full rounded-xl border border-border bg-surface pl-10 pr-4 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-gold transition-colors disabled:opacity-50"
                     disabled={isSubmitting}
                   />
@@ -159,13 +154,22 @@ export function BulkQuoteForm() {
                 </div>
                 {quantityErrors.length > 0 && (
                   <p className="text-sm text-destructive flex items-center gap-1.5">
-                    <AlertCircle className="h-4 w-4" aria-hidden="true" />
                     {quantityErrors[0]}
                   </p>
                 )}
-                <p className="text-xs text-muted-foreground">
-                  Whole or fractional metric tons (up to 3 decimal places).
-                </p>
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="bulk-destination" className="block text-sm font-medium text-foreground">
+                  Delivery Destination
+                </label>
+                <input
+                  id="bulk-destination"
+                  type="text"
+                  value="Factory Address - Placeholder"
+                  readOnly
+                  className="block w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm text-muted-foreground focus:outline-none transition-colors"
+                />
               </div>
 
               <PrimaryButton
@@ -175,13 +179,21 @@ export function BulkQuoteForm() {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden="true" />
-                    Preparing…
+                    <svg
+                      className="h-4 w-4 animate-spin mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Calculating…
                   </>
                 ) : (
                   <>
-                    <Plus className="h-4 w-4 mr-2" aria-hidden="true" />
-                    Calculate & Add to Quote
+                    Calculate Estimated Price & Add to Quote
+                    <ArrowRight className="h-4 w-4 ml-1" aria-hidden="true" />
                   </>
                 )}
               </PrimaryButton>
@@ -195,10 +207,10 @@ export function BulkQuoteForm() {
 
           {/* Right: confirmation panel */}
           <div className="hidden lg:block">
-            <div className="glass-panel rounded-2xl p-8 border border-gold/20 shadow-xl">
+            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 shadow-xl">
               <div className="flex items-start gap-4 mb-6">
                 <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gold/10 flex items-center justify-center text-gold">
-                  <Plus className="h-6 w-6" aria-hidden="true" />
+                  <ArrowRight className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">Quote request prepared</h3>
@@ -210,13 +222,13 @@ export function BulkQuoteForm() {
               </div>
               <AnimatePresence mode="wait">
                 {confirmation && (
-                  <div className="rounded-xl border border-success/20 bg-success/5 p-4 mb-6">
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                    >
-                      <div className="flex items-start gap-3">
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="rounded-xl border border-success/20 bg-success/5 p-4 mb-6"
+                  >
+                    <div className="flex items-start gap-3">
                       <div className="flex-shrink-0 h-6 w-6 rounded-full bg-success text-success-foreground flex items-center justify-center">
                         <span className="text-[10px] font-bold">✓</span>
                       </div>
@@ -236,7 +248,6 @@ export function BulkQuoteForm() {
                       Dismiss
                     </button>
                   </motion.div>
-                  </div>
                 )}
               </AnimatePresence>
               <div className="pt-4 border-t border-border/50">
@@ -248,17 +259,7 @@ export function BulkQuoteForm() {
                   className="inline-flex items-center gap-2 font-medium text-gold hover:text-gold-hover transition-colors"
                 >
                   View Quote Cart
-                  <span className="h-4 w-4" aria-hidden="true">
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                      viewBox="0 0 24 24"
-                      className="h-4 w-4"
-                    >
-                      <path d="M9 5l7 7-7 7" />
-                    </svg>
-                  </span>
+                  <ChevronDown className="h-4 w-4" aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -267,13 +268,13 @@ export function BulkQuoteForm() {
           {/* Mobile confirmation banner */}
           {confirmation && (
             <AnimatePresence mode="wait">
-              <div className="lg:hidden rounded-xl border border-success/20 bg-success/5 p-4 mb-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                >
-                  <div className="flex items-start gap-3">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="lg:hidden rounded-xl border border-success/20 bg-success/5 p-4 mb-6"
+              >
+                <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 h-6 w-6 rounded-full bg-success text-success-foreground flex items-center justify-center mt-0.5">
                     <span className="text-[10px] font-bold">✓</span>
                   </div>
@@ -293,7 +294,6 @@ export function BulkQuoteForm() {
                   Dismiss
                 </button>
               </motion.div>
-              </div>
             </AnimatePresence>
           )}
         </div>

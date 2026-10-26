@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Menu, X, ShoppingCart, Layers } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { useQuoteCart } from "@/components/quote/QuoteCartProvider";
 
@@ -19,7 +19,7 @@ function LogoFallback({ className }: LogoFallbackProps) {
         className,
       ].filter(Boolean).join(" ")}
     >
-      <div className="h-6 w-6 rounded-full bg-gold flex items-center justify-center text-primary font-bold text-xs">
+      <div className="h-6 w-6 rounded-full bg-gold flex items-center justify-center text-deep font-bold text-xs">
         P
       </div>
       <span className="font-serif font-bold text-xl tracking-tight text-foreground">
@@ -50,6 +50,15 @@ function Logo({ className }: { className?: string }) {
   );
 }
 
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
+  { href: "/products", label: "Our Products" },
+  { href: "/facility-tour", label: "Facility Tour" },
+  { href: "/b2b-services", label: "B2B Services" },
+  { href: "/contact", label: "Contact Us" },
+];
+
 export function SiteHeader() {
   const { itemCount } = useQuoteCart();
   const [isOpen, setIsOpen] = useState(false);
@@ -64,12 +73,6 @@ export function SiteHeader() {
   }, []);
 
   const closeMenu = useCallback(() => setIsOpen(false), []);
-
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/facilities", label: "Facilities" },
-    { href: "/quote-cart", label: "Quote Cart" },
-  ];
 
   return (
     <header className="sticky top-0 z-40">
@@ -102,6 +105,15 @@ export function SiteHeader() {
               ))}
               <Link
                 href="/quote-cart"
+                className="rounded-xl bg-gold text-deep px-6 py-2 font-medium shadow-sm hover:bg-gold-hover transition-colors"
+              >
+                Get Bulk Quote
+              </Link>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Link
+                href="/quote-cart"
                 className="flex items-center gap-2 rounded-xl border border-border bg-background px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:bg-gold hover:text-gold-foreground group"
               >
                 <ShoppingCart className="h-4 w-4 group-hover:text-gold-foreground" aria-hidden="true" />
@@ -111,16 +123,6 @@ export function SiteHeader() {
                     {itemCount}
                   </span>
                 )}
-              </Link>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Link
-                href="/quote-cart"
-                className="hidden md:flex items-center gap-2 rounded-xl bg-gold text-gold-foreground px-5 py-2 font-medium shadow-sm hover:bg-gold-hover transition-colors"
-              >
-                <Layers className="h-4 w-4" aria-hidden="true" />
-                Request a Quote
               </Link>
               <button
                 onClick={() => setIsOpen((prev) => !prev)}
@@ -138,7 +140,6 @@ export function SiteHeader() {
             </div>
           </div>
         </div>
-      </div>
 
         <AnimatePresence mode="wait">
           {isOpen && (
@@ -151,43 +152,39 @@ export function SiteHeader() {
                 aria-label="Mobile navigation menu"
               >
                 <div className="container px-4 mx-auto py-4 space-y-2">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={closeMenu}
-                    className="block px-4 py-3 rounded-xl text-foreground hover:bg-gold/10 hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                <div className="px-4 py-3 border border-border rounded-lg bg-background">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={closeMenu}
+                      className="block px-4 py-3 rounded-xl text-foreground hover:bg-gold/10 hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                  <div className="px-4 py-3 border border-border rounded-lg bg-background">
+                    <Link
+                      href="/quote-cart"
+                      onClick={closeMenu}
+                      className="flex items-center gap-2 w-full rounded-lg border border-gold/30 bg-gold/5 text-gold-foreground px-3 py-2 font-medium text-sm transition-colors hover:bg-gold/10"
+                    >
+                      <ShoppingCart className="h-4 w-4" aria-hidden="true" />
+                      Quote Cart ({itemCount})
+                    </Link>
+                  </div>
                   <Link
                     href="/quote-cart"
                     onClick={closeMenu}
-                    className="flex items-center gap-2 w-full rounded-lg border border-gold/30 bg-gold/5 text-gold-foreground px-3 py-2 font-medium text-sm transition-colors hover:bg-gold/10"
+                    className="w-full rounded-xl bg-gold text-deep px-4 py-3 font-medium text-center shadow-sm hover:bg-gold-hover transition-colors"
                   >
-                    <ShoppingCart className="h-4 w-4" aria-hidden="true" />
-                    Quote Cart ({itemCount})
-                    {itemCount > 0 && (
-                      <span className="ml-auto inline-flex h-5 w-5 items-center justify-center rounded-full bg-gold text-gold-foreground text-[10px] font-bold">
-                        {itemCount}
-                      </span>
-                    )}
+                    Get Bulk Quote
                   </Link>
                 </div>
-                <Link
-                  href="/quote-cart"
-                  onClick={closeMenu}
-                  className="w-full rounded-xl bg-gold text-gold-foreground px-4 py-3 font-medium text-center shadow-sm hover:bg-gold-hover transition-colors"
-                >
-                  Request a Quote
-                </Link>
+              </motion.div>
               </div>
-            </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>
+      </div>
     </header>
   );
 }

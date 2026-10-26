@@ -5,7 +5,7 @@ import { TrustBanner } from "@/components/home/TrustBanner";
 export const metadata = {
   title: "Prime Fresh Oil Mills | Premium Edible Seeds & Oils",
   description:
-    "Explore bulk edible seeds, oils, and de-oiled cakes from Prime Fresh Oil Mills. Prepare a quotation request for your business procurement needs.",
+    "Direct from the source. B2B bulk orders & processing tracking for premium edible seeds, oils, and de-oiled cakes.",
 };
 
 export default function HomePage() {
