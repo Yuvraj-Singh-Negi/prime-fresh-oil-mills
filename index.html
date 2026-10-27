@@ -51,50 +51,52 @@
     <img src="assets/hero-oil.jpg" alt="Yellow mustard oil being poured into a glass" class="hero-bg" onerror="this.style.display='none';this.parentElement.style.background='#0d3b24';">
     <div class="hero-overlay"></div>
     <div class="container">
-      <div class="hero-content">
-        <h1>Premium Edible Seeds,<br>Oils &amp; De-oiled Cakes</h1>
-        <p>Direct from the source. B2B bulk orders &amp; processing tracking.</p>
-        <a href="quote-cart.html" class="btn btn-primary">Start Bulk Order <span>▸</span></a>
-      </div>
-
-      <!-- Right Sidebar: Bestseller + Quote Form -->
-      <div class="hero-right">
-        <div class="bestseller-card">
-          <div class="bestseller-header">
-            <span class="badge">Yellow Mustard Oil</span>
-            <span class="tag">(Bestseller)</span>
-          </div>
-          <ul class="bullets">
-            <li>Natural, cold-pressed &amp; unrefined.</li>
-          </ul>
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1>Premium Edible Seeds,<br>Oils &amp; De-oiled Cakes</h1>
+          <p>Direct from the source. B2B bulk orders &amp; processing tracking.</p>
+          <a href="quote-cart.html" class="btn btn-primary">Start Bulk Order <span>▸</span></a>
         </div>
 
-        <div class="quote-form-card">
-          <h3>Build a Bulk Quote</h3>
-          <form id="hero-quote-form" onsubmit="return heroQuoteSubmit(event)">
-            <div class="form-group">
-              <label>Select Product</label>
-              <select id="hero-product">
-                <option value="yellow-mustard-seeds">Yellow Mustard Oil</option>
-                <option value="groundnut-seeds">Groundnut Seeds</option>
-                <option value="sesame-seeds">Sesame Seeds</option>
-                <option value="deoiled-cakes">De-Oiled Cakes</option>
-                <option value="seed-cakes">Seed Cakes</option>
-              </select>
+        <!-- Right Sidebar: Bestseller + Quote Form -->
+        <div class="hero-right">
+          <div class="bestseller-card">
+            <div class="bestseller-header">
+              <span class="badge">Yellow Mustard Oil</span>
+              <span class="tag">(Bestseller)</span>
             </div>
-            <div class="form-group">
-              <label>Enter Quantity (Metric Tons / KG)</label>
-              <div class="input-with-unit">
-                <input type="text" id="hero-qty" value="1" placeholder="Enter Quantity">
-                <span class="unit">MT</span>
+            <ul class="bullets">
+              <li>Natural, cold-pressed &amp; unrefined.</li>
+            </ul>
+          </div>
+
+          <div class="quote-form-card">
+            <h3>Build a Bulk Quote</h3>
+            <form id="hero-quote-form" onsubmit="return heroQuoteSubmit(event)">
+              <div class="form-group">
+                <label>Select Product</label>
+                <select id="hero-product">
+                  <option value="yellow-mustard-seeds">Yellow Mustard Oil</option>
+                  <option value="groundnut-seeds">Groundnut Seeds</option>
+                  <option value="sesame-seeds">Sesame Seeds</option>
+                  <option value="deoiled-cakes">De-Oiled Cakes</option>
+                  <option value="seed-cakes">Seed Cakes</option>
+                </select>
               </div>
-            </div>
-            <div class="form-group">
-              <label>Delivery Destination</div>
-              <input type="text" value="Factory Address - Placeholder" readonly class="readonly-input">
-            </div>
-            <button type="submit" class="btn btn-primary btn-full">Calculate Estimated Price &amp; Add to Quote <span>▸</span></button>
-          </form>
+              <div class="form-group">
+                <label>Enter Quantity (Metric Tons / KG)</label>
+                <div class="input-with-unit">
+                  <input type="text" id="hero-qty" value="1" placeholder="Enter Quantity">
+                  <span class="unit">MT</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Delivery Destination</div>
+                <input type="text" value="Factory Address - Placeholder" readonly class="readonly-input">
+              </div>
+              <button type="submit" class="btn btn-primary btn-full">Calculate Estimated Price &amp; Add to Quote <span>▸</span></button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
