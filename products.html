@@ -20,7 +20,7 @@
       <nav class="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About Us</a>
-        <a href="products.html" style="color:var(--primary);">Our Products <span style="font-size:0.7rem;">▼</span></a>
+        <a href="products.html" style="color:var(--primary);">Our Products <span class="dropdown">▼</span></a>
         <a href="facility-tour.html">Facility Tour</a>
         <a href="b2b-services.html">B2B Services</a>
         <a href="contact.html">Contact Us</a>
@@ -114,14 +114,13 @@
         <article class="product-card fade-in">
           <div class="product-image">
             <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.parentElement.style.background='#F5F0E6';">
-            <span class="stock-badge">${p.inStock ? '●' : ''} In Stock</span>
+            <span class="stock-badge">In Stock</span>
           </div>
           <div class="product-content">
-            ${p.subtitle ? `<span class="product-subtitle">${p.subtitle}</span>` : ''}
             <h3>${p.name}</h3>
             <p>${p.description}</p>
             <div class="product-price">Price on request</div>
-            <button class="product-btn" onclick="addToCart('${p.id}', 1)" data-product-id="${p.id}">
+            <button class="btn btn-outline btn-full" onclick="addToCart('${p.id}', 1)">
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg> Request Quote
             </button>
           </div>
